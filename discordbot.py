@@ -49,10 +49,10 @@ class DiscordBOT:
         get_text = discord_event.content
         print('init完了')
 
-        if get_text == "$help"
+        if get_text == "$help":
             await discordbot.reaction(discord_event)
             DiscordBOT.send_text = "現在使用可能なコマンドリストです。\n**$dice**\n１～６の中でランダムな数字を発表します。\n**$dice**\n**候補１**\n**候補n**\n複数の候補からランダムに選んで発表します。diceの後ろは改行してください。\n**$start minecraft**\n現在利用不可。マインクラフトのサーバーを起動します。\n**$stop minecraft**\n現在利用不可。マインクラフトのサーバーを停止します。"
-        if get_text == "$start ark":
+        elif get_text == "$start ark":
             if DiscordBOT.arkServerFlag == True:
                 DiscordBOT.send_text = "Arkサーバー起動は実行済みです。接続を確認してください。\nサーバーに接続できない場合は、サーバーを一度終了させてから、再びサーバー起動をお試しください。"
             else:
