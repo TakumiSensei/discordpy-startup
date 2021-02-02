@@ -404,4 +404,4 @@ async def on_command_error(ctx, error):
     await ctx.send(error_msg)
 
 # Botの起動とDiscordサーバーへの接続
-bot.run(token)
+client.run(token)
