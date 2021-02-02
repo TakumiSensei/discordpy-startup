@@ -1,5 +1,4 @@
 discord.py[voice]>=1.4.1
-aws-cfn-bootstrap==1.4
 awscli==1.18.147
 Babel==0.9.6
 backports.ssl-match-hostname==3.5.0.1
