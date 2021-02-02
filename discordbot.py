@@ -49,6 +49,9 @@ class DiscordBOT:
         get_text = discord_event.content
         print('init完了')
 
+        if get_text == "$help"
+            await discordbot.reaction(discord_event)
+            DiscordBOT.send_text = "現在使用可能なコマンドリストです。\n**$dice**\n１～６の中でランダムな数字を発表します。\n**$dice**\n**候補１**\n**候補n**\n複数の候補からランダムに選んで発表します。diceの後ろは改行してください。\n**$start minecraft**\n現在利用不可。マインクラフトのサーバーを起動します。\n**$stop minecraft**\n現在利用不可。マインクラフトのサーバーを停止します。"
         if get_text == "$start ark":
             if DiscordBOT.arkServerFlag == True:
                 DiscordBOT.send_text = "Arkサーバー起動は実行済みです。接続を確認してください。\nサーバーに接続できない場合は、サーバーを一度終了させてから、再びサーバー起動をお試しください。"
@@ -111,11 +114,13 @@ class DiscordBOT:
     def dice(self, get_text):
         areas = get_text.splitlines()
         if len(areas) == 1:
+            time.sleep(1)
             DiscordBOT.send_text = "ダイスの結果は...**「" + str(random.randint(1,6)) + "」**です！"
             return
 
         for i in range(len(areas)):
             if i != len(areas) - 1:
+                time.sleep(1)
                 areas[i] = areas[i+1]
                 print(areas[i])
 
