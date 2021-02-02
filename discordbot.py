@@ -8,6 +8,15 @@ import time
 import random
 import re
 
+
+# ARKサーバーのインスタンスidを指定してください
+INSTANCEID = 'i-0cc31d2cc8dd3f649'
+# Minecraftサーバーのインスタンスidを指定してください
+M_INSTANCEID = 'i-0444e29e022cea113'
+
+# 接続に必要なオブジェクトを生成
+client = discord.Client()
+
 #bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 
