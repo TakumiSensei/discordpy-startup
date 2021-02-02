@@ -41,5 +41,4 @@ schedule==0.6.0
 simplejson==3.2.0
 six==1.15.0
 urllib3==1.25.7
-yum-langpacks==0.4.2
 yum-metadata-parser==1.1.4
