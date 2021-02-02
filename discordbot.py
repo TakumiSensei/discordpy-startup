@@ -15,7 +15,7 @@ INSTANCEID = 'i-0cc31d2cc8dd3f649'
 M_INSTANCEID = 'i-0444e29e022cea113'
 
 # 接続に必要なオブジェクトを生成
-client = discord.Client()
+client = discord.Client(activity=discord.CustomActivity(name = "$helpで使用可能なコマンドリストをお伝えします。", type = discord.ActivityType.custom))
 
 #bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
@@ -51,7 +51,7 @@ class DiscordBOT:
 
         if get_text == "$help":
             await discordbot.reaction(discord_event)
-            DiscordBOT.send_text = "現在使用可能なコマンドリストです。\n**$dice**\n１～６の中でランダムな数字を発表します。\n**$dice**\n**候補１**\n**候補n**\n複数の候補からランダムに選んで発表します。diceの後ろは改行してください。\n**$start minecraft**\n現在利用不可。マインクラフトのサーバーを起動します。\n**$stop minecraft**\n現在利用不可。マインクラフトのサーバーを停止します。"
+            DiscordBOT.send_text = "現在使用可能なコマンドリストです。\n**$dice**\n　１～６の中でランダムな数字を発表します。\n**$dice**\n**候補１**\n**候補n**\n　複数の候補からランダムに選んで発表します。diceの後ろは改行してください。\n**$start minecraft**\n　現在利用不可。マインクラフトのサーバーを起動します。\n**$stop minecraft**\n　現在利用不可。マインクラフトのサーバーを停止します。"
         elif get_text == "$start ark":
             if DiscordBOT.arkServerFlag == True:
                 DiscordBOT.send_text = "Arkサーバー起動は実行済みです。接続を確認してください。\nサーバーに接続できない場合は、サーバーを一度終了させてから、再びサーバー起動をお試しください。"
