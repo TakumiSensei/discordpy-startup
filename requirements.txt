@@ -9,7 +9,6 @@ chardet==2.2.1
 colorama==0.3.2
 cryptography==3.1
 docutils==0.12
-ec2-hibinit-agent==1.0.2
 enum34==1.1.10
 futures==3.0.5
 hibagent==1.1.0
