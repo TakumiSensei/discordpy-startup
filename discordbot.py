@@ -393,7 +393,8 @@ discordbot = DiscordBOT()
 @client.event
 async def on_ready():
     print('ログインしました')
-    client.change_presence(activity=discord.Activity(name = "$helpで使用可能なコマンドリストをお伝えします。", type = discord.ActivityType.custom))
+
+client.change_presence(activity=discord.Activity(name = "$helpで使用可能なコマンドリストをお伝えします。", type = discord.ActivityType.custom))
 
 # on get message
 @client.event
