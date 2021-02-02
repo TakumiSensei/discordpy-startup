@@ -35,7 +35,6 @@ pyxattr==0.5.1
 PyYAML==3.10
 repoze.lru==0.4
 requests==2.6.0
-rpm-python==4.11.3
 rsa==3.4.1
 s3transfer==0.3.3
 schedule==0.6.0
