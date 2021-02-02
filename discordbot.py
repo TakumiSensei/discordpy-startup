@@ -15,7 +15,7 @@ INSTANCEID = 'i-0cc31d2cc8dd3f649'
 M_INSTANCEID = 'i-0444e29e022cea113'
 
 # 接続に必要なオブジェクトを生成
-client = discord.Client(activity=discord.Activity(name = "$helpで使用可能なコマンドリストをお伝えします。", type = discord.ActivityType.custom))
+client = discord.Client()
 
 #bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
@@ -393,6 +393,7 @@ discordbot = DiscordBOT()
 @client.event
 async def on_ready():
     print('ログインしました')
+    client.change_presence(activity=discord.Activity(name = "$helpで使用可能なコマンドリストをお伝えします。", type = discord.ActivityType.custom))
 
 # on get message
 @client.event
