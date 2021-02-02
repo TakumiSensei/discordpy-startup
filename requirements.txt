@@ -28,7 +28,6 @@ ply==3.4
 pyasn1==0.1.9
 pycparser==2.20
 pygpgme==0.3
-pyliblzma==0.5.3
 PyNaCl==1.4.0
 pystache==0.5.3
 python-daemon==1.6
