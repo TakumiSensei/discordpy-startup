@@ -30,7 +30,6 @@ pycparser==2.20
 pygpgme==0.3
 PyNaCl==1.4.0
 pystache==0.5.3
-python-daemon==1.6
 python-dateutil==2.6.0
 pyxattr==0.5.1
 PyYAML==3.10
