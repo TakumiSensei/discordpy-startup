@@ -137,10 +137,11 @@ class DiscordBOT:
     #チームを作成するクラス関数
     def createTeam(self, discord_event):
         get_text = discord_event.content
-        vcmember = [member.name for member in discord_event.author.voice.channel.members]
-        if len(vcmember) == 0:
+        vcstate = discord_event.author.voice
+        if vcstate is None:
             DiscordBOT.send_text = "チーム振り分け機能は、ボイスチャンネルに接続してからご利用ください。"
             return
+        vcmember = [member.name for member in vcstate.channel.members]
         
         areas = get_text.split()
         if len(areas) == 1:
