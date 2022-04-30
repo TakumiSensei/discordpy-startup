@@ -7,7 +7,9 @@ import paramiko
 import time
 import random
 import re
+import logging
 
+logging.basicConfig(level=logging.INFO)
 
 # ARKサーバーのインスタンスidを指定してください
 INSTANCEID = 'i-0cc31d2cc8dd3f649'
@@ -20,7 +22,7 @@ M_INSTANCEID = 'i-0444e29e022cea113'
 #bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 
-intents = discord.Intents.default()  # デフォルトのIntentsオブジェクトを生成
+intents = discord.Intents.all()  # デフォルトのIntentsオブジェクトを生成
 intents.typing = False  # typingを受け取らないように
 client = discord.Client(intents=intents)
 
@@ -55,7 +57,7 @@ class DiscordBOT:
 
         if get_text == "$help":
             await discordbot.reaction(discord_event)
-            DiscordBOT.send_text = "現在使用可能なコマンドリストです。\n**$dice**\n　１～６の中でランダムな数字を発表します。\n**$dice**\n**候補１**\n**候補n**\n　複数の候補からランダムに選んで発表します。diceの後ろは改行してください。\n**$start minecraft**\n　現在利用不可。マインクラフトのサーバーを起動します。\n**$stop minecraft**\n　現在利用不可。マインクラフトのサーバーを停止します。"
+            DiscordBOT.send_text = "現在使用可能なコマンドリストです。\n**$dice**\n　１～６の中でランダムな数字を発表します。\n**$dice**\n**候補１**\n**候補n**\n　複数の候補からランダムに選んで発表します。diceの後ろは改行してください。\n**$team**\n　接続中のボイスチャンネルのメンバーをチーム分けします。\n**$team n**\n　接続中のボイスチャンネルのメンバーをn個のチームに分けます。\n**$start minecraft**\n　現在利用不可。マインクラフトのサーバーを起動します。\n**$stop minecraft**\n　現在利用不可。マインクラフトのサーバーを停止します。"
         elif get_text == "$start ark":
             if DiscordBOT.arkServerFlag == True:
                 DiscordBOT.send_text = "Arkサーバー起動は実行済みです。接続を確認してください。\nサーバーに接続できない場合は、サーバーを一度終了させてから、再びサーバー起動をお試しください。"
@@ -103,7 +105,7 @@ class DiscordBOT:
                 
         elif get_text.startswith("$team"):
             await discordbot.reaction(discord_event)
-            discordbot.createTeam(get_text)
+            discordbot.createTeam(discord_event)
 
 
         if DiscordBOT.send_text != "":
@@ -135,13 +137,14 @@ class DiscordBOT:
         DiscordBOT.send_text = "選ばれたのは**「" + str(random.choice(areas)) + "」**です！"
         
     #チームを作成するクラス関数
-    def createTeam(self, get_text):
-        vcchannel = get_text.author.voice.channel
-        if vcchannel is None:
+    def createTeam(self, discord_event):
+        get_text = discord_event.content
+        vcstate = discord_event.author.voice
+        if vcstate is None:
             DiscordBOT.send_text = "チーム振り分け機能は、ボイスチャンネルに接続してからご利用ください。"
             return
-        vcmember = [member.name for member in vcchannel.members]
-        #DiscordBOT.send_text = vcmember
+        vcmember = [member.name for member in vcstate.channel.members]
+        #logging.info("vcname : " + vcstate.channel.name)
         
         areas = get_text.split()
         if len(areas) == 1:
@@ -157,16 +160,17 @@ class DiscordBOT:
             if not discordbot.is_int(areas[1]):
                 DiscordBOT.send_text = "チーム数は半角数字の整数を入力してください。例：$team 3"
                 return
-            
-            if len(vcmember) % areas[1] == 0:
-                teamlist = "\n".join(discordbot.createTeamList(vcmember, areas[1]))
+            teamnum = int(areas[1])
+            if len(vcmember) % teamnum == 0:
+                teamlist = "\n".join(discordbot.createTeamList(vcmember, teamnum))
+                #logging.info("teamlist : " + teamlist)
                 DiscordBOT.send_text = teamlist
                 return
             else:
-                DiscordBOT.send_text = "ボイスチャンネルに接続中のメンバー数を" + str(areas[1]) + "で割り切れません。"
+                DiscordBOT.send_text = "ボイスチャンネルに接続中のメンバー数を" + str(teamnum) + "で割り切れません。"
                 return
         
-    def is_int(s):
+    def is_int(self, s):
         try:
             int(s)
             return True
@@ -180,9 +184,11 @@ class DiscordBOT:
         count = 0
         teamcount = 1
         output = ["Team 1"]
+        logging.info(memberlist)
         for mem in memberlist:
             count += 1
             output.append(mem)
+            #logging.info("memname : " + mem)
             if count >= membernum and teamcount != teamnum:
                 count = 0
                 teamcount += 1
