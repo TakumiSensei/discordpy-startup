@@ -7,7 +7,9 @@ import paramiko
 import time
 import random
 import re
+import logging
 
+logging.basicConfig(level=logging.DEBUG)
 
 # ARKサーバーのインスタンスidを指定してください
 INSTANCEID = 'i-0cc31d2cc8dd3f649'
@@ -160,6 +162,7 @@ class DiscordBOT:
             teamnum = int(areas[1])
             if len(vcmember) % teamnum == 0:
                 teamlist = "\n".join(discordbot.createTeamList(vcmember, teamnum))
+                logging.debug(teamlist)
                 DiscordBOT.send_text = teamlist
                 return
             else:
@@ -183,6 +186,7 @@ class DiscordBOT:
         for mem in memberlist:
             count += 1
             output.append(mem.name)
+            logging.debug(mem.name)
             if count >= membernum and teamcount != teamnum:
                 count = 0
                 teamcount += 1
