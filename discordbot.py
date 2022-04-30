@@ -103,6 +103,7 @@ class DiscordBOT:
                 
         elif get_text.startswith("$team"):
             await discordbot.reaction(discord_event)
+            DiscordBOT.send_text = "チーム振り分けstart"
             discordbot.createTeam(get_text)
 
 
@@ -140,6 +141,7 @@ class DiscordBOT:
         if vcchannel is None:
             DiscordBOT.send_text = "チーム振り分け機能は、ボイスチャンネルに接続してからご利用ください。"
             return
+        DiscordBOT.send_text = "vcchannel"
         DiscordBOT.send_text = vcchannel
         vcmember = [member.name for member in vcchannel.members]
         DiscordBOT.send_text = vcmember
