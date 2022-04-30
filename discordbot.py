@@ -22,7 +22,7 @@ M_INSTANCEID = 'i-0444e29e022cea113'
 #bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 
-intents = discord.Intents.default()  # デフォルトのIntentsオブジェクトを生成
+intents = discord.Intents.all()  # デフォルトのIntentsオブジェクトを生成
 intents.typing = False  # typingを受け取らないように
 client = discord.Client(intents=intents)
 
