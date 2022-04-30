@@ -140,8 +140,9 @@ class DiscordBOT:
         if vcchannel is None:
             DiscordBOT.send_text = "チーム振り分け機能は、ボイスチャンネルに接続してからご利用ください。"
             return
+        DiscordBOT.send_text = vcchannel
         vcmember = [member.name for member in vcchannel.members]
-        #DiscordBOT.send_text = vcmember
+        DiscordBOT.send_text = vcmember
         
         areas = get_text.split()
         if len(areas) == 1:
