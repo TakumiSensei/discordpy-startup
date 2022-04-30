@@ -144,6 +144,7 @@ class DiscordBOT:
             DiscordBOT.send_text = "チーム振り分け機能は、ボイスチャンネルに接続してからご利用ください。"
             return
         vcmember = [member.name for member in vcstate.channel.members]
+        logging.info("vcname : " + vcstate.channel.name)
         
         areas = get_text.split()
         if len(areas) == 1:
@@ -162,7 +163,7 @@ class DiscordBOT:
             teamnum = int(areas[1])
             if len(vcmember) % teamnum == 0:
                 teamlist = "\n".join(discordbot.createTeamList(vcmember, teamnum))
-                logging.info(teamlist)
+                logging.info("teamlist : " + teamlist)
                 DiscordBOT.send_text = teamlist
                 return
             else:
@@ -183,10 +184,11 @@ class DiscordBOT:
         count = 0
         teamcount = 1
         output = ["Team 1"]
+        logging.info(memberlist)
         for mem in memberlist:
             count += 1
-            output.append(mem.username)
-            logging.info(mem.username)
+            output.append(mem.name)
+            logging.info("memname : " + mem.name)
             if count >= membernum and teamcount != teamnum:
                 count = 0
                 teamcount += 1
