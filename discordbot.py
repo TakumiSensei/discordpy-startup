@@ -103,7 +103,7 @@ class DiscordBOT:
                 
         elif get_text.startswith("$team"):
             await discordbot.reaction(discord_event)
-            discordbot.createTeam(get_text)
+            discordbot.createTeam(discord_event)
 
 
         if DiscordBOT.send_text != "":
@@ -135,8 +135,9 @@ class DiscordBOT:
         DiscordBOT.send_text = "選ばれたのは**「" + str(random.choice(areas)) + "」**です！"
         
     #チームを作成するクラス関数
-    def createTeam(self, get_text):
-        vcmember = [member.name for member in get_text.author.voice.channel.members]
+    def createTeam(self, discord_event):
+        get_text = discord_event.content
+        vcmember = [member.name for member in discord_event.author.voice.channel.members]
         if len(vcmember) == 0:
             DiscordBOT.send_text = "チーム振り分け機能は、ボイスチャンネルに接続してからご利用ください。"
             return
