@@ -187,8 +187,8 @@ class DiscordBOT:
         logging.info(memberlist)
         for mem in memberlist:
             count += 1
-            output.append(mem.name)
-            logging.info("memname : " + mem.name)
+            output.append(mem)
+            logging.info("memname : " + mem)
             if count >= membernum and teamcount != teamnum:
                 count = 0
                 teamcount += 1
