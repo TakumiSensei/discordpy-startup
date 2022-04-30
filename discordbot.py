@@ -182,7 +182,7 @@ class DiscordBOT:
         output = ["Team 1"]
         for mem in memberlist:
             count += 1
-            output.append(mem)
+            output.append(mem.name)
             if count >= membernum and teamcount != teamnum:
                 count = 0
                 teamcount += 1
