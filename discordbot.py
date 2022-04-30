@@ -166,7 +166,7 @@ class DiscordBOT:
                 DiscordBOT.send_text = "ボイスチャンネルに接続中のメンバー数を" + str(areas[1]) + "で割り切れません。"
                 return
         
-    def is_int(s):
+    def is_int(self, s):
         try:
             int(s)
             return True
