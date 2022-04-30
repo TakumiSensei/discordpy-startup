@@ -137,7 +137,7 @@ class DiscordBOT:
     #チームを作成するクラス関数
     def createTeam(self, get_text):
         vcchannel = get_text.author.voice.channel
-        if vcchannel == null:
+        if vcchannel is None:
             DiscordBOT.send_text = "チーム振り分け機能は、ボイスチャンネルに接続してからご利用ください。"
             return
         vcmember = [member.name for member in vcchannel.members]
@@ -146,7 +146,7 @@ class DiscordBOT:
         areas = get_text.split()
         if len(areas) == 1:
             if len(vcmember) % 2 == 0:
-                teamlist = "\n".join(createTeamList(vcmember, 2))
+                teamlist = "\n".join(discordbot.createTeamList(vcmember, 2))
                 DiscordBOT.send_text = teamlist
                 return
             else:
@@ -154,12 +154,12 @@ class DiscordBOT:
                 return
         
         else:
-            if not is_int(areas[1]):
+            if not discordbot.is_int(areas[1]):
                 DiscordBOT.send_text = "チーム数は半角数字の整数を入力してください。例：$team 3"
                 return
             
             if len(vcmember) % areas[1] == 0:
-                teamlist = "\n".join(createTeamList(vcmember, areas[1]))
+                teamlist = "\n".join(discordbot.createTeamList(vcmember, areas[1]))
                 DiscordBOT.send_text = teamlist
                 return
             else:
