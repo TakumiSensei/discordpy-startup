@@ -157,13 +157,13 @@ class DiscordBOT:
             if not discordbot.is_int(areas[1]):
                 DiscordBOT.send_text = "チーム数は半角数字の整数を入力してください。例：$team 3"
                 return
-            
-            if len(vcmember) % areas[1] == 0:
-                teamlist = "\n".join(discordbot.createTeamList(vcmember, areas[1]))
+            teamnum = int(areas[1])
+            if len(vcmember) % teamnum == 0:
+                teamlist = "\n".join(discordbot.createTeamList(vcmember, teamnum))
                 DiscordBOT.send_text = teamlist
                 return
             else:
-                DiscordBOT.send_text = "ボイスチャンネルに接続中のメンバー数を" + str(areas[1]) + "で割り切れません。"
+                DiscordBOT.send_text = "ボイスチャンネルに接続中のメンバー数を" + str(teamnum) + "で割り切れません。"
                 return
         
     def is_int(self, s):
