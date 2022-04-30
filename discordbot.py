@@ -15,10 +15,14 @@ INSTANCEID = 'i-0cc31d2cc8dd3f649'
 M_INSTANCEID = 'i-0444e29e022cea113'
 
 # 接続に必要なオブジェクトを生成
-client = discord.Client()
+#client = discord.Client()
 
 #bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
+
+intents = discord.Intents.default()  # デフォルトのIntentsオブジェクトを生成
+intents.typing = False  # typingを受け取らないように
+client = discord.Client(intents=intents)
 
 
 #@bot.command()
@@ -96,6 +100,10 @@ class DiscordBOT:
             else:
                 await discordbot.reaction(discord_event)
                 discordbot.listMc()
+                
+        elif get_text.startswith("$team"):
+            await discordbot.reaction(discord_event)
+            discordbot.createTeam(get_text)
 
 
         if DiscordBOT.send_text != "":
@@ -125,6 +133,62 @@ class DiscordBOT:
                 print(areas[i])
 
         DiscordBOT.send_text = "選ばれたのは**「" + str(random.choice(areas)) + "」**です！"
+        
+    #チームを作成するクラス関数
+    def createTeam(self, get_text):
+        vcchannel = get_text.author.voice.channel
+        if vcchannel == null:
+            DiscordBOT.send_text = "チーム振り分け機能は、ボイスチャンネルに接続してからご利用ください。"
+            return
+        vcmember = [member.name for member in vcchannel.members]
+        #DiscordBOT.send_text = vcmember
+        
+        areas = get_text.split()
+        if len(areas) == 1:
+            if len(vcmember) % 2 == 0:
+                teamlist = "\n".join(createTeamList(vcmember, 2))
+                DiscordBOT.send_text = teamlist
+                return
+            else:
+                DiscordBOT.send_text = "ボイスチャンネルに接続中のメンバー数を2で割り切れません。"
+                return
+        
+        else:
+            if not is_int(areas[1]):
+                DiscordBOT.send_text = "チーム数は半角数字の整数を入力してください。例：$team 3"
+                return
+            
+            if len(vcmember) % areas[1] == 0:
+                teamlist = "\n".join(createTeamList(vcmember, areas[1]))
+                DiscordBOT.send_text = teamlist
+                return
+            else:
+                DiscordBOT.send_text = "ボイスチャンネルに接続中のメンバー数を" + str(areas[1]) + "で割り切れません。"
+                return
+        
+    def is_int(s):
+        try:
+            int(s)
+            return True
+        except ValueError:
+            return False
+        
+    def createTeamList(self, memberlist, teamnum):
+        membernum = len(memberlist) / teamnum
+        random.shuffle(memberlist)
+        
+        count = 0
+        teamcount = 1
+        output = ["Team 1"]
+        for mem in memberlist:
+            count += 1
+            output.append(mem)
+            if count >= membernum and teamcount != teamnum:
+                count = 0
+                teamcount += 1
+                output.append("Team " + str(teamcount))
+        
+        return output
 
     #Minecraftサーバーを起動するクラス関数
     def startMc(self):
