@@ -1,5 +1,6 @@
 import discord
 from discord.ext import tasks, commands
+from discord_slash import SlashCommand, SlashContext
 import os
 import traceback
 import subprocess
@@ -24,7 +25,9 @@ token = os.environ['DISCORD_BOT_TOKEN']
 
 intents = discord.Intents.all()  # デフォルトのIntentsオブジェクトを生成
 intents.typing = False  # typingを受け取らないように
-client = discord.Client(intents=intents)
+#client = discord.Client(intents=intents)
+client = discord.Client(intents_discord.Intents.all())
+slash_client = SlashCommand(bot, sync_commands=True)
 
 
 #@bot.command()
@@ -479,6 +482,22 @@ async def on_command_error(ctx, error):
     orig_error = getattr(error, "original", error)
     error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
     await ctx.send(error_msg)
+
+@slash_client.slash(name="dice", description="ダイスを振ります。スペースor改行区切りで選択肢追加できます。")
+async def dice(ctx: SlashContext):
+    areas = ctx.splitlines()
+    if len(areas) == 1:
+        time.sleep(1)
+        DiscordBOT.send_text = "ダイスの結果は...**「" + str(random.randint(1,6)) + "」**です！"
+        return
+
+    for i in range(len(areas)):
+        if i != len(areas) - 1:
+            time.sleep(1)
+            areas[i] = areas[i+1]
+            print(areas[i])
+
+        DiscordBOT.send_text = "選ばれたのは**「" + str(random.choice(areas)) + "」**です！"
 
 # Botの起動とDiscordサーバーへの接続
 client.run(token)
