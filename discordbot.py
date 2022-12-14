@@ -59,7 +59,7 @@ class DiscordBOT:
             await discordbot.reaction(discord_event)
             DiscordBOT.send_text = "現在使用可能なコマンドリストです。\n**$dice**\n　１～６の中でランダムな数字を発表します。\n**$dice**\n**候補１**\n**候補n**\n　複数の候補からランダムに選んで発表します。diceの後ろは改行してください。\n**$team**\n　接続中のボイスチャンネルのメンバーをチーム分けします。\n**$team n**\n　接続中のボイスチャンネルのメンバーをn個のチームに分けます。\n**$start minecraft**\n　現在利用不可。マインクラフトのサーバーを起動します。\n**$stop minecraft**\n　現在利用不可。マインクラフトのサーバーを停止します。"
         elif get_text == "$start ark":
-            if DiscordBOT.arkServerFlag == True:
+            if DiscordBOT.arkServerFlag is True:
                 DiscordBOT.send_text = "Arkサーバー起動は実行済みです。接続を確認してください。\nサーバーに接続できない場合は、サーバーを一度終了させてから、再びサーバー起動をお試しください。"
             else:
                 DiscordBOT.arkServerFlag = True
@@ -76,7 +76,7 @@ class DiscordBOT:
                 DiscordBOT.arkSSHClient = None
 
         elif get_text == "$start minecraft":
-            if DiscordBOT.mcServerFlag == True:
+            if DiscordBOT.mcServerFlag is True:
                 DiscordBOT.send_text = "Minecraftサーバー起動は実行済みです。接続を確認してください。\nサーバーに接続できない場合は、サーバーを一度終了させてから、再びサーバー起動をお試しください。"
             else:
                 # DiscordBOT.mcServerFlag = True
@@ -107,17 +107,15 @@ class DiscordBOT:
             await discordbot.reaction(discord_event)
             discordbot.createTeam(discord_event)
 
-
         if DiscordBOT.send_text != "":
             await discord_event.channel.send(DiscordBOT.send_text)
             DiscordBOT.send_text = ""
 
-
     # メッセージ取得時にユーザに対してリアクションをつけるクラス関数
     async def reaction(self, message):
         reactions = ["\U0001F600", "\U0001F609", "\U0001F914", "\U0001F62A", "\U0001F60E"]
+        
         await message.add_reaction(random.choice(reactions))
-
 
     # メッセージ分岐で実行されるクラス関数
     # ダイスを振るクラス関数
@@ -223,7 +221,6 @@ class DiscordBOT:
         ip_add = ip_add.replace("\n", "")
         # print('Minecraftサーバー インスタンスのホスト名：', ip_add)
 
-
         # SSH接続クライアント作成
         DiscordBOT.mcSSHClient = paramiko.SSHClient()
         DiscordBOT.mcSSHClient.set_missing_host_key_policy(paramiko.WarningPolicy())
@@ -264,7 +261,6 @@ class DiscordBOT:
         # print(out)
         # err = DiscordBOT.mc_stderr.readlines()
         # print(err)
-
 
         # print('********サーバー停止処理完了、60秒後にインスタンス停止実行')
         time.sleep(120)
@@ -383,7 +379,6 @@ class DiscordBOT:
         ip_add = ip_add.replace("\n", "")
         # print('Minecraftサーバー インスタンスのホスト名：', ip_add)
 
-
         # SSH接続クライアント作成
         DiscordBOT.mcSSHClient = paramiko.SSHClient()
         DiscordBOT.mcSSHClient.set_missing_host_key_policy(paramiko.WarningPolicy())
@@ -416,7 +411,6 @@ class DiscordBOT:
             #    print(log)
             logs = f.read()
         return logs
-
 
     # @tasks.loop(seconds=60)
     # async def mcMonitor(self):
@@ -452,12 +446,8 @@ class DiscordBOT:
     #     print('waiting for mcMonitor...')
     #     await client.wait_until_ready()
 
-
-
-
 # print('インスタンス生成')
 discordbot = DiscordBOT()
-
 
 
 @client.event
