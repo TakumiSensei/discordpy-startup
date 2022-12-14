@@ -123,13 +123,13 @@ class DiscordBOT:
         areas = get_text.splitlines()
         if len(areas) == 1:
             time.sleep(1)
-            DiscordBOT.send_text = "ダイスの結果は...**「" + str(random.randint(1,6)) + "」**です！"
+            DiscordBOT.send_text = "ダイスの結果は...**「" + str(random.randint(1, 6)) + "」**です！"
             return
 
         for i in range(len(areas)):
             if i != len(areas) - 1:
                 time.sleep(1)
-                areas[i] = areas[i+1]
+                areas[i] = areas[i + 1]
                 print(areas[i])
 
         DiscordBOT.send_text = "選ばれたのは**「" + str(random.choice(areas)) + "」**です！"
@@ -212,7 +212,7 @@ class DiscordBOT:
         time.sleep(1)
         # print('Minecraftサーバー インスタンスのホスト名取得完了')
         proc = proc.stdout.decode("utf-8")
-        proc = proc.replace("\n","")
+        proc = proc.replace("\n", "")
         print('Minecraftサーバー インスタンスのホスト名：', proc)
 
         # Minecraftサーバー インスタンスのipアドレスを取得
@@ -249,8 +249,8 @@ class DiscordBOT:
         # サーバー起動処理完了のメッセージをdiscordに送信
         DiscordBOT.send_text = "<@&627367515646853120> インスタンスの起動とMinecraftサーバーへの接続に成功しました。\n サーバー情報　：　1.16.3 Vanilla\n 接続方法　　　：　マルチプレイ→ダイレクト接続\n IPアドレス　　：　`{}`".format(ip_add)
 
-
     # Minecraftサーバーを停止するクラス関数
+
     def stopMc(self):
         # SSHでminecraftサーバー停止
         print('********サーバー停止処理実施')
@@ -272,8 +272,8 @@ class DiscordBOT:
         DiscordBOT.mcSSHClient = None
         DiscordBOT.send_text = "<@&627367515646853120> サーバー及びインスタンスの停止が完了しました。\nまたのご来訪をお待ちしております。"
 
-
     # Arkサーバーを起動するクラス関数
+
     def startArk(self):
         print('start ark 受け付けました')
         # ARKサーバー インスタンスの起動
@@ -291,7 +291,7 @@ class DiscordBOT:
         time.sleep(3)
         print('ARKサーバー インスタンスのホスト名取得完了')
         proc = proc.stdout.decode("utf-8")
-        proc = proc.replace("\n","")
+        proc = proc.replace("\n", "")
         print('ARKサーバー インスタンスのホスト名：', proc)
 
         # SSH接続クライアント作成
@@ -318,15 +318,15 @@ class DiscordBOT:
         # サーバー起動処理完了のメッセージをdiscordに送信
         DiscordBOT.send_text = "<@&746619641706709003> インスタンスの起動とARKサーバーへの接続に成功しました。\n サーバー起動までお待ちください。"
 
-
     # Arkサーバーを停止するクラス関数
+
     def stopArk(self):
         # ARKサーバー インスタンスのホスト名を取得
         proc = subprocess.run(["aws ec2 describe-instances --instance-ids {} --query 'Reservations[*].Instances[*].PublicDnsName' --output text".format(INSTANCEID)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         time.sleep(3)
         print('ARKサーバー インスタンスのホスト名取得完了')
         proc = proc.stdout.decode("utf-8")
-        proc = proc.replace("\n","")
+        proc = proc.replace("\n", "")
         print('ARKサーバー インスタンスのホスト名：', proc)
 
         # SSH接続クライアント作成
@@ -364,13 +364,14 @@ class DiscordBOT:
         DiscordBOT.send_text = "<@&746619641706709003> サーバー及びインスタンスの停止が完了しました。\nまたのご来訪をお待ちしております。"
 
     # Minecraftの各種接続情報を取得する（定期監視用）
+    
     def connectMc(self):
         # print('********Minecraftの各種接続情報を取得')
         proc = subprocess.run(["aws ec2 describe-instances --instance-ids {} --query 'Reservations[*].Instances[*].PublicDnsName' --output text".format(M_INSTANCEID)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         time.sleep(1)
         print('Minecraftサーバー インスタンスのホスト名取得完了')
         proc = proc.stdout.decode("utf-8")
-        proc = proc.replace("\n","")
+        proc = proc.replace("\n", "")
         # print('Minecraftサーバー インスタンスのホスト名：', proc)
 
         # Minecraftサーバー インスタンスのipアドレスを取得
@@ -396,7 +397,6 @@ class DiscordBOT:
         DiscordBOT.mc_stdin.flush()
         time.sleep(1)
         print('********Minecraftフォルダへ移動完了')
-
 
     def listMc(self):
         DiscordBOT.mc_stdin.write('screen -p 0 -S minecraft -X eval \'stuff \"list\"\\015\'\n')
@@ -446,6 +446,7 @@ class DiscordBOT:
     #     print('waiting for mcMonitor...')
     #     await client.wait_until_ready()
 
+
 # print('インスタンス生成')
 discordbot = DiscordBOT()
 
@@ -463,7 +464,7 @@ async def on_message(message):
         return
     # DiscordBOT.dMessage = message
     await discordbot.main(message)
-    
+
 @client.event
 async def on_command_error(ctx, error):
     orig_error = getattr(error, "original", error)
