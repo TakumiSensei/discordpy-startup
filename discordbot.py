@@ -48,8 +48,8 @@ class DiscordBOT:
     mc_timer = 0
     dMessage = None
 
-    # def __init__(self):
-    #     self.mcMonitor.start()
+    def __init__(self):
+        self.mcMonitor.start()
 
     async def main(self, discord_event):
         get_text = discord_event.content
@@ -418,39 +418,39 @@ class DiscordBOT:
         return logs
 
 
-    # @tasks.loop(seconds=60)
-    # async def mcMonitor(self):
-    #     #print('mcMonitorループ中...')
-    #     #minecraftサーバーが建っている場合、監視処理実行
-    #     if DiscordBOT.mcServerFlag == True:
-    #         log = discordbot.listMc()
-    #         log = log.decode()
-    #         #print(log)
+    @tasks.loop(seconds=60)
+    async def mcMonitor(self):
+        #print('mcMonitorループ中...')
+        #minecraftサーバーが建っている場合、監視処理実行
+        if DiscordBOT.mcServerFlag == True:
+            log = discordbot.listMc()
+            log = log.decode()
+            #print(log)
 
-    #         match = re.findall(r'There are \d of a max of 20 players online:', log)[-1]
-    #         #print('サーバー接続数取得')
-    #         print(match)
-    #         if 'There are 0 of a max of 20 players online:' in match:
-    #             DiscordBOT.mc_timer += 1
-    #             print(DiscordBOT.mc_timer)
-    #             #10分以上経過していたら、サーバー終了処理
-    #             if DiscordBOT.mc_timer >= 10:
-    #                 DiscordBOT.mc_timer = 0
-    #                 discordbot.stopMc()
-    #                 #サーバーストップのお知らせ送信
-    #                 DiscordBOT.send_text = "<@&627367515646853120> 10分以上無人のため、サーバーを自動停止しました。\n私がいる限り、切り忘れても安心です。"
-    #                 await DiscordBOT.dMessage.channel.send(DiscordBOT.send_text)
-    #                 DiscordBOT.send_text = ""
-    #         #サーバー接続人数が0でない場合、mc_timerを0に
-    #         else:
-    #             DiscordBOT.mc_timer = 0
-    #             #print('timerリセット:' + str(DiscordBOT.mc_timer))
+            match = re.findall(r'There are \d of a max of 20 players online:', log)[-1]
+            #print('サーバー接続数取得')
+            print(match)
+            if 'There are 0 of a max of 20 players online:' in match:
+                DiscordBOT.mc_timer += 1
+                print(DiscordBOT.mc_timer)
+                #10分以上経過していたら、サーバー終了処理
+                if DiscordBOT.mc_timer >= 10:
+                    DiscordBOT.mc_timer = 0
+                    discordbot.stopMc()
+                    #サーバーストップのお知らせ送信
+                    DiscordBOT.send_text = "<@&627367515646853120> 10分以上無人のため、サーバーを自動停止しました。\n私がいる限り、切り忘れても安心です。"
+                    await DiscordBOT.dMessage.channel.send(DiscordBOT.send_text)
+                    DiscordBOT.send_text = ""
+            #サーバー接続人数が0でない場合、mc_timerを0に
+            else:
+                DiscordBOT.mc_timer = 0
+                #print('timerリセット:' + str(DiscordBOT.mc_timer))
 
-    # #botの準備が整うまでループを待機
-    # @mcMonitor.before_loop
-    # async def before_mcMonitor(self):
-    #     print('waiting for mcMonitor...')
-    #     await client.wait_until_ready()
+    #botの準備が整うまでループを待機
+    @mcMonitor.before_loop
+    async def before_mcMonitor(self):
+        print('waiting for mcMonitor...')
+        await client.wait_until_ready()
 
 
 
