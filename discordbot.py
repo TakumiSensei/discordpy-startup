@@ -126,13 +126,7 @@ class DiscordBOT:
             DiscordBOT.send_text = "ダイスの結果は...**「" + str(random.randint(1, 6)) + "」**です！"
             return
 
-        for i in range(len(areas)):
-            if i != len(areas) - 1:
-                time.sleep(1)
-                areas[i] = areas[i + 1]
-                print(areas[i])
-
-        del areas[-1]
+        del areas[0]
         print(areas)
         DiscordBOT.send_text = "選ばれたのは**「" + str(random.choice(areas)) + "」**です！"
         
