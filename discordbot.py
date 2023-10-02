@@ -132,6 +132,8 @@ class DiscordBOT:
                 areas[i] = areas[i + 1]
                 print(areas[i])
 
+        del areas[-1]
+        print(areas)
         DiscordBOT.send_text = "選ばれたのは**「" + str(random.choice(areas)) + "」**です！"
         
     # チームを作成するクラス関数
