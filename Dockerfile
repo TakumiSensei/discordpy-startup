@@ -32,4 +32,4 @@ RUN pip install git+https://github.com/Pycord-Development/pycord
 EXPOSE 8080
 
 # DiscordBotとFastAPIのサーバ起動
-CMD [ "python", "-u", "discordbot.py" ]
+CMD [ "python", "discordbot.py" ]
