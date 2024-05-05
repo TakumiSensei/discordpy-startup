@@ -1,5 +1,6 @@
 import discord
 from discord.ext import tasks, commands
+import dotenv
 import os
 import traceback
 import subprocess
@@ -8,6 +9,9 @@ import time
 import random
 import re
 import logging
+from server import server_thread
+
+dotenv.load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 
@@ -466,6 +470,9 @@ async def on_command_error(ctx, error):
     orig_error = getattr(error, "original", error)
     error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
     await ctx.send(error_msg)
+
+# Koyeb用 サーバ立ち上げ
+server_thread()
 
 # Botの起動とDiscordサーバーへの接続
 client.run(token)
