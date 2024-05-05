@@ -12,7 +12,6 @@ docutils==0.12
 enum34==1.1.10
 fastapi==0.110.1
 futures==3.0.5
-idna==2.4
 iniparse==0.4
 ipaddress==1.0.23
 Jinja2==2.7.2
